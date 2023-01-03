@@ -12,8 +12,8 @@ const menuItems = [
 
 function Navbar() {
   return (
-    <header>
-      <nav className="container py-2 flex items-center shadow">
+    <header className="sticky top-0 shadow bg-bodySecondary/95">
+      <nav className="container py-2 flex items-center">
         <Link to="/">
           <GiFulguroPunch size="3.5rem" className="fill-primary" />
         </Link>
