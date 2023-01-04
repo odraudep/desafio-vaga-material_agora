@@ -1,0 +1,57 @@
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { heroFetch } from '@config/axios';
+import HeroCard from '@components/HeroCard';
+import HeroContainer from './HeroContainer';
+
+function Hero() {
+  const [hero, setHero] = useState();
+  const [heroes, setHeroes] = useState([]);
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchHero = async () => {
+      const { data } = await heroFetch.get(`/${id}`);
+
+      setHero(data);
+    };
+
+    setHeroes([]);
+    const fetchHeroes = async () => {
+      for (let count = 1; count <= 4; count++) {
+        const { data } = await heroFetch.get(`/${count}`);
+
+        setHeroes((prev) => [...prev, { ...data }]);
+      }
+    };
+
+    fetchHero();
+    fetchHeroes();
+  }, [id]);
+
+  return (
+    <div>
+      {hero ? (
+        <div>
+          <HeroContainer hero={hero} />
+
+          <hr className="my-8" />
+
+          <div>
+            <h2>Heroes:</h2>
+
+            <ul className="grid grid-cols-4 gap-8">
+              {heroes.map((heroesItem) => (
+                <li key={`suggested_hero-${heroesItem.id}`}>
+                  <HeroCard hero={heroesItem} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+export default Hero;

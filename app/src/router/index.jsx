@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Home from '@views/Home';
+import Hero from '@views/Hero';
 import App from '../App';
 
 const router = createBrowserRouter([
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
+      },
+      {
+        path: '/hero/:id',
+        element: <Hero />,
       },
     ],
   },

@@ -8,7 +8,9 @@ module.exports = {
         padding: '2rem',
       },
       colors: {
-        primary: '#facc15',
+        primary: {
+          DEFAULT: '#facc15',
+        },
         body: '#22272e',
         bodySecondary: '#2d333b',
       },

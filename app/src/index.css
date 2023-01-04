@@ -1,3 +1,47 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-7xl tracking-wide mb-12;
+  }
+
+  h2 {
+    @apply text-4xl mb-2;
+  }
+
+  h3 {
+    @apply text-2xl font-bold mb-1;
+  }
+
+  h4 {
+    @apply text-lg font-bold mb-1;
+  }
+}
+
+@layer utilities {
+  .list-labels li {
+    @apply mb-1;
+  }
+
+  .list-labels h4 {
+    display: inline-block;
+    margin-right: .25em;
+    margin-bottom: 0;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply grid place-items-center px-4 py-2 rounded transition-all;
+  }
+
+  .btn--primary {
+    @apply bg-primary text-gray-900 hover:brightness-75 focus:brightness-75 active:brightness-50;
+  }
+
+  .btn--only-icon {
+    @apply aspect-square rounded-full;
+  }
+}

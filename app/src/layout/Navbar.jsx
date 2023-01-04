@@ -12,7 +12,7 @@ const menuItems = [
 
 function Navbar() {
   return (
-    <header className="sticky top-0 shadow bg-bodySecondary/95">
+    <header className="sticky top-0 shadow z-20 bg-bodySecondary/95">
       <nav className="container py-2 flex items-center">
         <Link to="/">
           <GiFulguroPunch size="3.5rem" className="fill-primary" />

@@ -10,7 +10,7 @@ function Home() {
   useEffect(() => {
     setHeroes([]);
     const fetchHeroes = async () => {
-      for (let count = 1; count <= 20; count++) {
+      for (let count = 1; count <= 10; count++) {
         const { data } = await heroFetch.get(`/${count}`);
 
         setHeroes((prev) => [...prev, { ...data }]);

@@ -25,6 +25,7 @@
         "react/prop-types": "off",
         "react/no-unescaped-entities": "off",
         "no-await-in-loop": "off",
-        "no-plusplus": "off"
+        "no-plusplus": "off",
+        "max-len": "off"
     }
 }
