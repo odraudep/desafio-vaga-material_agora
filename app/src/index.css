@@ -20,7 +20,7 @@
   }
 }
 
-@layer utilities {
+@layer components {
   .list-labels li {
     @apply mb-1;
   }
@@ -30,11 +30,13 @@
     margin-right: .25em;
     margin-bottom: 0;
   }
-}
 
-@layer components {
+  .form-control {
+    @apply px-4 py-2 rounded focus:outline-primary text-black;
+  }
+
   .btn {
-    @apply grid place-items-center px-4 py-2 rounded transition-all;
+    @apply grid place-items-center px-4 py-2 rounded transition-all text-lg;
   }
 
   .btn--primary {

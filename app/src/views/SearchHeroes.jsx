@@ -2,25 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { heroFetch } from '@config/axios';
 import HeroCard from '@components/HeroCard';
+import { useParams } from 'react-router-dom';
 
-function Home() {
-  const [heroes, setHeroes] = useState([]);
+function SearchHeroes() {
+  const [heroes, setHeroes] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const { searchName } = useParams();
 
   useEffect(() => {
-    setHeroes([]);
     const fetchHeroes = async () => {
-      for (let count = 1; count <= 10; count++) {
-        const { data } = await heroFetch.get(`/${count}`);
+      const { data } = await heroFetch.get(`/search/${searchName}`);
 
-        setHeroes((prev) => [...prev, { ...data }]);
-      }
+      setHeroes(data.results);
 
       setIsLoading(false);
     };
 
     fetchHeroes();
-  }, []);
+  }, [searchName]);
 
   return (
     <div>
@@ -42,4 +41,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default SearchHeroes;
