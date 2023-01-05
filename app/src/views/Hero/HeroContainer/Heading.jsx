@@ -9,7 +9,7 @@ function HeroContainerHeading({ hero }) {
 
       <div className="flex gap-2">
         <Link
-          to={`/hero/${hero.id - 1}`}
+          to={`/hero/${hero.id <= 1 ? 1 : hero.id - 1}`}
           className="btn btn--primary btn--only-icon"
         >
           <AiOutlineArrowLeft size="1.25rem" />

@@ -1,30 +1,60 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { heroFetch } from '@config/axios';
 import HeroCard from '@components/HeroCard';
 
 function Home() {
   const [heroes, setHeroes] = useState([]);
+  const [heroesOffset, setHeroesOffset] = useState(1);
+  const [loadMore, setLoadMore] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const timeToFetchMoreHeroes = useRef(null);
+
+  const fetchHeroes = async () => {
+    const limit = heroesOffset + 10;
+
+    for (let count = heroesOffset; count < limit; count++) {
+      const { data } = await heroFetch.get(`/${count}`);
+
+      setHeroes((prev) => [...prev, { ...data }]);
+    }
+
+    setHeroesOffset(limit);
+    setIsLoading(false);
+    setLoadMore(true);
+  };
 
   useEffect(() => {
     setHeroes([]);
-    const fetchHeroes = async () => {
-      for (let count = 1; count <= 10; count++) {
-        const { data } = await heroFetch.get(`/${count}`);
-
-        setHeroes((prev) => [...prev, { ...data }]);
-      }
-
-      setIsLoading(false);
-    };
-
     fetchHeroes();
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (timeToFetchMoreHeroes.current) {
+        clearTimeout(timeToFetchMoreHeroes.current);
+      }
+
+      const isScrollEnd = window.scrollY + window.innerHeight >= document.body.scrollHeight;
+
+      if (isScrollEnd && loadMore) {
+        setIsLoading(true);
+        setLoadMore(false);
+        timeToFetchMoreHeroes.current = setTimeout(() => fetchHeroes(heroesOffset), 2000);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timeToFetchMoreHeroes.current);
+    };
+  }, [heroesOffset]);
+
   return (
     <div>
-      {!isLoading ? (
+      {heroes.length > 0 ? (
         <ul className="grid grid-cols-5 gap-4">
           {heroes.map((hero) => (
             <li key={hero.id}>
@@ -32,12 +62,14 @@ function Home() {
             </li>
           ))}
         </ul>
-      ) : (
+      ) : null}
+
+      {isLoading ? (
         <AiOutlineLoading3Quarters
           size="4rem"
-          className="animate-spin mx-auto"
+          className="animate-spin mt-4 mx-auto"
         />
-      )}
+      ) : null}
     </div>
   );
 }

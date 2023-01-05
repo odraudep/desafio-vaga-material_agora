@@ -21,8 +21,8 @@ const heroStats = [
 function HeroContainer({ hero }) {
   return (
     <div className="flex gap-8">
-      <div>
-        <img src={hero.image.url} alt={hero.name} />
+      <div className="lg:min-w-[480px] lg:max-w-[480px]">
+        <img src={hero.image.url} alt={hero.name} className="max-h-[640px]" />
       </div>
 
       <div className="flex-1">
