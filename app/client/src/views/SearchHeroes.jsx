@@ -13,16 +13,20 @@ function SearchHeroes() {
 
   useEffect(() => {
     const fetchHeroes = async () => {
-      const { data } = await heroFetch.get(`/search/${searchName}`);
+      try {
+        const { data } = await heroFetch.get(`/search/${searchName}`);
 
-      if (!data.results) {
-        toast.error('Any hero was found.');
-        return navigate('/');
+        if (data === 'error') {
+          throw new Error('Any hero was found.');
+        }
+
+        setHeroes(data.results);
+
+        setIsLoading(false);
+      } catch (err) {
+        toast.error(err.message);
+        navigate('/');
       }
-
-      setHeroes(data.results);
-
-      setIsLoading(false);
     };
 
     fetchHeroes();

@@ -9,7 +9,8 @@ export const getSuperheroes = async (req, res) => {
     return res
       .status(400)
       .json({
-        message: 'Provide an offset or limit value greater than 1',
+        response: 'error',
+        error: 'provide an offset or limit value greater than 1',
       });
   }
 
@@ -25,7 +26,8 @@ export const getSuperheroes = async (req, res) => {
     res
       .status(500)
       .json({
-        message: 'There was an error in the server. Try again later',
+        response: 'error',
+        error: 'there was an error in the server. Try again later',
       });
   }
 };
@@ -41,7 +43,8 @@ export const getSuperhero = async (req, res) => {
     res
       .status(500)
       .json({
-        message: 'There was an error in the server. Try again later',
+        response: 'error',
+        error: 'there was an error in the server. Try again later',
       });
   }
 };
@@ -57,7 +60,8 @@ export const searchSuperhero = async (req, res) => {
     res
       .status(500)
       .json({
-        message: 'There was an error in the server. Try again later',
+        response: 'error',
+        error: 'There was an error in the server. Try again later',
       });
   }
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { heroFetch } from '@config/axios';
 import HeroCard from '@components/HeroCard';
+import { toast } from 'react-toastify';
 
 function Home() {
   const [heroes, setHeroes] = useState([]);
@@ -13,13 +14,27 @@ function Home() {
   const fetchHeroes = async () => {
     const limit = 10;
 
-    const { data: { results } } = await heroFetch.get(`/?offset=${heroesOffset}&limit=${limit}`);
+    try {
+      const { data } = await heroFetch.get(
+        `/?offset=${heroesOffset}&limit=${limit}`,
+      );
 
-    setHeroes((prev) => [...prev, ...results]);
+      if (data.response === 'error') {
+        throw new Error(
+          'There was an error while fetching the superheroes. Please refresh the page.',
+        );
+      }
 
-    setHeroesOffset(heroesOffset + limit);
-    setIsLoading(false);
-    setLoadMore(true);
+      setHeroes((prev) => [...prev, ...data.results]);
+
+      setHeroesOffset(heroesOffset + limit);
+      setIsLoading(false);
+      setLoadMore(true);
+    } catch (err) {
+      toast.error(err.message, {
+        autoClose: false,
+      });
+    }
   };
 
   useEffect(() => {
@@ -42,7 +57,10 @@ function Home() {
       if (isScrollEnd && loadMore) {
         setIsLoading(true);
         setLoadMore(false);
-        timeToFetchMoreHeroes.current = setTimeout(() => fetchHeroes(heroesOffset), 2000);
+        timeToFetchMoreHeroes.current = setTimeout(
+          () => fetchHeroes(heroesOffset),
+          2000,
+        );
       }
     };
 

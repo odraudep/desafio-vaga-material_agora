@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { heroFetch } from '@config/axios';
 import HeroCard from '@components/HeroCard';
@@ -10,21 +11,39 @@ function Hero() {
   const [heroes, setHeroes] = useState([]);
   const [isHeroesLoading, setIsHeroesLoading] = useState(true);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchHero = async () => {
-      const { data } = await heroFetch.get(`/${id}`);
+      try {
+        const { data } = await heroFetch.get(`/${id}`);
 
-      setHero(data);
+        if (data.response === 'error') {
+          throw new Error('Any hero was found with this id.');
+        }
+
+        setHero(data);
+      } catch (err) {
+        toast.error(err.message);
+        navigate('/');
+      }
     };
 
     setIsHeroesLoading(true);
 
     const fetchHeroes = async () => {
-      const { data: { results } } = await heroFetch.get(`/?offset=${Number(id) + 2}&limit=${4}`);
+      try {
+        const { data } = await heroFetch.get(`/?offset=${Number(id) + 2}&limit=${4}`);
 
-      setHeroes(results);
-      setIsHeroesLoading(false);
+        if (data.response === 'error') {
+          throw new Error('There was an error while fetching suggested superheroes. Refreshing the page may resolve the issue.');
+        }
+
+        setHeroes(data.results);
+        setIsHeroesLoading(false);
+      } catch (err) {
+        toast.error(err.message);
+      }
     };
 
     fetchHero();
