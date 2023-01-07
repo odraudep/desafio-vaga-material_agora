@@ -1,0 +1,11 @@
+{
+  "name": "desafio-vaga-material_agora",
+  "version": "1.0.0",
+  "repository": "https://github.com/odraudep/desafio-vaga-material_agora",
+  "author": "Eduardo Pinheiro",
+  "license": "MIT",
+  "scripts": {
+    "install-dependencies": "cd app/api && yarn && cd ../client && yarn",
+    "dev": "cd app/api && yarn dev && cd ../client && yarn dev"
+  }
+}
