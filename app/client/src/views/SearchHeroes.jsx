@@ -16,7 +16,7 @@ function SearchHeroes() {
       try {
         const { data } = await heroFetch.get(`/search/${searchName}`);
 
-        if (data === 'error') {
+        if (data.response === 'error') {
           throw new Error('Any hero was found.');
         }
 
