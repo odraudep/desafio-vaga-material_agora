@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { heroFetch } from '@config/axios';
 import HeroCard from '@components/HeroCard';
-import { useParams } from 'react-router-dom';
 
 function SearchHeroes() {
   const [heroes, setHeroes] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const { searchName } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchHeroes = async () => {
       const { data } = await heroFetch.get(`/search/${searchName}`);
+
+      if (!data.results) return navigate('/');
 
       setHeroes(data.results);
 

@@ -18,11 +18,9 @@ function Hero() {
 
     setHeroes([]);
     const fetchHeroes = async () => {
-      for (let count = 1; count <= 4; count++) {
-        const { data } = await heroFetch.get(`/${count}`);
+      const { data: { results } } = await heroFetch.get(`/?offset=${Number(id) + 2}&limit=${4}`);
 
-        setHeroes((prev) => [...prev, { ...data }]);
-      }
+      setHeroes(results);
     };
 
     fetchHero();
@@ -38,7 +36,7 @@ function Hero() {
           <hr className="my-8" />
 
           <div>
-            <h2>Heroes:</h2>
+            <h2>Suggested Heroes:</h2>
 
             <ul className="grid grid-cols-4 gap-8">
               {heroes.map((heroesItem) => (

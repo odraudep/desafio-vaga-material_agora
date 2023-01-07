@@ -9,7 +9,7 @@ export const getSuperheroes = async (req, res) => {
     return res
       .status(400)
       .json({
-        message: 'Provide a offset or limit value greater than 1',
+        message: 'Provide an offset or limit value greater than 1',
       });
   }
 
@@ -21,6 +21,38 @@ export const getSuperheroes = async (req, res) => {
     }
 
     res.json({ results: heroes });
+  } catch (err) {
+    res
+      .status(500)
+      .json({
+        message: 'There was an error in the server. Try again later',
+      });
+  }
+};
+
+export const getSuperhero = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const { data } = await axios.get(`https://superheroapi.com/api/203294025607288/${id}`);
+
+    res.json(data);
+  } catch (err) {
+    res
+      .status(500)
+      .json({
+        message: 'There was an error in the server. Try again later',
+      });
+  }
+};
+
+export const searchSuperhero = async (req, res) => {
+  const { name } = req.params;
+
+  try {
+    const { data } = await axios.get(`https://superheroapi.com/api/203294025607288/search/${name}`);
+
+    res.json(data);
   } catch (err) {
     res
       .status(500)
