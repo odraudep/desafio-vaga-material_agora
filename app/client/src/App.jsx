@@ -1,6 +1,7 @@
 import React from 'react';
-import Navbar from '@layout/Navbar';
 import { Outlet } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import Navbar from '@layout/Navbar';
 import Footer from '@layout/Footer';
 
 function App() {
@@ -12,6 +13,11 @@ function App() {
         <Outlet />
       </main>
 
+      <ToastContainer
+        autoClose={4000}
+        draggable={false}
+        theme="dark"
+      />
       <Footer />
     </div>
   );

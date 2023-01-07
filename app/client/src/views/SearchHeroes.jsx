@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { heroFetch } from '@config/axios';
 import HeroCard from '@components/HeroCard';
@@ -14,7 +15,10 @@ function SearchHeroes() {
     const fetchHeroes = async () => {
       const { data } = await heroFetch.get(`/search/${searchName}`);
 
-      if (!data.results) return navigate('/');
+      if (!data.results) {
+        toast.error('Any hero was found.');
+        return navigate('/');
+      }
 
       setHeroes(data.results);
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { heroFetch } from '@config/axios';
 import HeroCard from '@components/HeroCard';
 import HeroContainer from './HeroContainer';
@@ -7,6 +8,7 @@ import HeroContainer from './HeroContainer';
 function Hero() {
   const [hero, setHero] = useState();
   const [heroes, setHeroes] = useState([]);
+  const [isHeroesLoading, setIsHeroesLoading] = useState(true);
   const { id } = useParams();
 
   useEffect(() => {
@@ -16,11 +18,13 @@ function Hero() {
       setHero(data);
     };
 
-    setHeroes([]);
+    setIsHeroesLoading(true);
+
     const fetchHeroes = async () => {
       const { data: { results } } = await heroFetch.get(`/?offset=${Number(id) + 2}&limit=${4}`);
 
       setHeroes(results);
+      setIsHeroesLoading(false);
     };
 
     fetchHero();
@@ -38,13 +42,20 @@ function Hero() {
           <div>
             <h2>Suggested Heroes:</h2>
 
-            <ul className="grid grid-cols-4 gap-8">
-              {heroes.map((heroesItem) => (
-                <li key={`suggested_hero-${heroesItem.id}`}>
-                  <HeroCard hero={heroesItem} />
-                </li>
-              ))}
-            </ul>
+            {!isHeroesLoading ? (
+              <ul className="grid grid-cols-4 gap-8">
+                {heroes.map((heroesItem) => (
+                  <li key={`suggested_hero-${heroesItem.id}`}>
+                    <HeroCard hero={heroesItem} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <AiOutlineLoading3Quarters
+                size="4rem"
+                className="animate-spin mx-auto"
+              />
+            )}
           </div>
         </div>
       ) : null}
