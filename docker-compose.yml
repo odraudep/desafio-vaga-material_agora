@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  api:
+    container_name: superhero-reactjs-api
+    restart: unless-stopped
+    image: superhero-reactjs-api_img:1.0.0
+    build:
+      context: app/api
+      dockerfile: Dockerfile
+    ports:
+      - 8888:8888
+
+  client:
+    container_name: superhero-reactjs-client
+    restart: unless-stopped
+    image: superhero-reactjs-client_img:1.0.0
+    build:
+      context: app/client
+      dockerfile: Dockerfile
+    ports:
+      - 5173:5173
+    depends_on:
+      - api
