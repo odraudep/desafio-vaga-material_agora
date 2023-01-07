@@ -11,15 +11,13 @@ function Home() {
   const timeToFetchMoreHeroes = useRef(null);
 
   const fetchHeroes = async () => {
-    const limit = heroesOffset + 10;
+    const limit = 10;
 
-    for (let count = heroesOffset; count < limit; count++) {
-      const { data } = await heroFetch.get(`/${count}`);
+    const { data: { results } } = await heroFetch.get(`/?offset=${heroesOffset}&limit=${limit}`);
 
-      setHeroes((prev) => [...prev, { ...data }]);
-    }
+    setHeroes((prev) => [...prev, ...results]);
 
-    setHeroesOffset(limit);
+    setHeroesOffset(heroesOffset + limit);
     setIsLoading(false);
     setLoadMore(true);
   };
