@@ -31,7 +31,7 @@ function SearchHeroes() {
   return (
     <div>
       {!isLoading ? (
-        <ul className="grid grid-cols-5 gap-4">
+        <ul className="grid gap-4 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 xs:grid-cols-2">
           {heroes.map((hero) => (
             <li key={hero.id}>
               <HeroCard hero={hero} />

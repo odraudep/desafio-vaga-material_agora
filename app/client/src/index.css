@@ -4,7 +4,7 @@
 
 @layer base {
   h1 {
-    @apply text-7xl tracking-wide mb-12;
+    @apply text-5xl tracking-wide mb-12 xs:text-7xl;
   }
 
   h2 {

@@ -4,10 +4,10 @@ import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
 
 function HeroContainerHeading({ hero }) {
   return (
-    <div className="flex justify-between items-center">
-      <h1>{hero.name}</h1>
+    <div className="flex justify-between items-center flex-wrap gap-8 mb-12 sm:flex-nowrap">
+      <h1 className="mb-0">{hero.name}</h1>
 
-      <div className="flex gap-2">
+      <div className="flex justify-center gap-2 w-full sm:w-auto">
         <Link
           to={`/hero/${hero.id <= 1 ? 1 : hero.id - 1}`}
           className="btn btn--primary btn--only-icon"

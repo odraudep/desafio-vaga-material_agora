@@ -43,7 +43,7 @@ function Hero() {
             <h2>Suggested Heroes:</h2>
 
             {!isHeroesLoading ? (
-              <ul className="grid grid-cols-4 gap-8">
+              <ul className="grid gap-8 mt-8 lg:grid-cols-4 md:grid-cols-2">
                 {heroes.map((heroesItem) => (
                   <li key={`suggested_hero-${heroesItem.id}`}>
                     <HeroCard hero={heroesItem} />

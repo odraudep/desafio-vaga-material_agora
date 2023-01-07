@@ -5,7 +5,7 @@ function HeroCard({ hero }) {
   return (
     <Link
       to={`/hero/${hero.id}`}
-      className="block overflow-hidden rounded shadow bg-zinc-800 opacity-80 transition-opacity hover:opacity-100"
+      className="block max-w-sm mx-auto overflow-hidden rounded shadow bg-zinc-800 opacity-80 transition-opacity hover:opacity-100"
     >
       <img src={hero.image.url} alt={`${hero.name}`} className="w-full h-[375px] object-cover" />
       <div className="px-4 py-2">
